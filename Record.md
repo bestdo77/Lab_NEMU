@@ -97,3 +97,47 @@ static struct {
 	}
 	```
 2. 打印寄存器:
+	- 几个宏：
+	```c
+	#define reg_l(index) (cpu.gpr[check_reg_index(index)]._32)
+	#define reg_w(index) (cpu.gpr[check_reg_index(index)]._16)
+	#define reg_b(index) (cpu.gpr[check_reg_index(index) & 0x3]._8[index >> 2])
+
+	extern const char* regsl[];
+	extern const char* regsw[];
+	extern const char* regsb[];
+	```
+	- 用枚举类型，传入数字`reg_l(index)`表示这个寄存器的地址，`regsl[index]`表示值。
+	```c
+		int cmd_info(char* s){
+			if(strcmp(s,"r")==0){
+				int i;
+				for(i=R_EAX;i<=R_EDI;i++){
+					printf("%s\t0x%.8x\t%d\n",regsl[i],reg_l(i),reg_l(i));
+				}
+				printf("$eip\t0x%08x\t%d\n", cpu.eip,cpu.eip);
+			}else if(strcmp(s,"w")){
+
+			}
+			return 0;
+		}
+	```
+	3. 扫描内存
+	- 使用 swaddr_read(addr, len) 调用函数，其中 addr 是要读取的地址，len 是要读取的字节数。
+	- 读入0x100000这样的地址：直接`scanf("%x")`就可以。
+	- 这里直接每次读四个字节，然后每次地址加4就可以了，因为地址是按字节存储的。
+	```c
+	int cmd_x(char* s){
+		int n,x1;
+		sscanf(s,"%d %x",&n,&x1);
+		int p;
+		for(p=0;p<n;p++){
+			if(p%4==0) printf("0x%.8x: ",x1);
+			printf("0x%.8x ",swaddr_read(x1,4));
+			x1+=4;
+			if(p%4==3) printf("\n");
+			else if(p==n-1) printf("\n");
+		}
+		return 0;
+	}
+	```
