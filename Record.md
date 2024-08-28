@@ -80,13 +80,18 @@ static struct {
 1. 单步执行的实现：
 	- 这里只提供了`int (*handler) (char *);`的函数指针，而给定的是一个`void cpu_exec(uint32_t);`函数，所以我额外写了个函数调用
 	```c
-	int cmd_si(char * s){
+		int cmd_si(char * s){
+		if(s==NULL){
+			cpu_exec(1);
+			return 0;
+		}
 		int p=0,i=0;
 		for(i=0;i<strlen(s);i++){
 			p*=10;
-			p+=s[i]-'a';
+			p+=s[i]-'0';
 		}
-		if(p==0) p=1;
+		// printf("%d\n",p);
+		// if(p==0) p=1;
 		cpu_exec(p);
 		return 0;
 	}
