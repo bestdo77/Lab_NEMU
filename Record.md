@@ -11,14 +11,27 @@
 
 ### PA1: 
 - 发现代码中定义了很多宏，vscode中`ctrl+shift+f`可以全局查找
-1. 实现寄存器结构体：
+1. 思考题1：`opcode_table`数组是什么类型？
+- 查找源码有以下定义：
+```c
+helper_fun opcode_table [256] = {
+	......
+}
+typedef int (*helper_fun)(swaddr_t)
+typedef uint32_t swaddr_t;
+```
+- 查阅资料得知：`helper_fun`是一个函数指针的名字，能接受`swaddr_t`也就是`uint32_t`的参数，返回`int`值。
+- opcode_table是一个函数指针数组,里面放的就是对不同内存的操作指令，有些还需要补全。
+2. 思考题2：在`cmd_c()`函数中调用`cpu_exec()`时为什么传入参数 $-1$?
+ - $-1$ 被传入参数 $n$ 里面，而 $n$ 是个`uint32_t`类型，也就代表着实际上传入的是无符号整数的最大值，来确保程序循环次数足够。
+3. 实现寄存器结构体：
 ```c
 #define reg_l(index) (cpu.gpr[check_reg_index(index)]._32)
 #define reg_w(index) (cpu.gpr[check_reg_index(index)]._16)
 //断言
 assert(reg_w(i) == (sample[i] & 0xffff));
 ```
-- 需要调整寄存器结构才能继续，这个assert就是判断一个32位寄存器的低16位是否跟其16位寄存器一样，如果不一样就不会运行
+- 需要调整寄存器结构才能继续，这个assert就是判断一个32位寄存器的低16位是否跟其16位寄存器一样，如果不一样就不会运行。
 - union中套struct：
 ```c
 union{
@@ -36,3 +49,14 @@ union{
 	};
 ```
 - 每个寄存器（eax，ecx等）与一个union（寄存器对应的地址）组成一个union，而寄存器之间的存储地址是分开的。
+3. 添加调试功能：
+- 手册中没写去哪里添加，于是开始读源码，程序主要在`ui_mainloop`中运行：
+```c
+for(i = 0; i < NR_CMD; i ++) {
+    if(strcmp(cmd, cmd_table[i].name) == 0) {
+        if(cmd_table[i].handler(args) < 0) { return; }
+        break;
+    }
+}
+```
+- 这段代码表明了每当读入命令时，就要去这个`cmd_table`中寻找是否有命令，意味着应该是到这里添加调试功能。
