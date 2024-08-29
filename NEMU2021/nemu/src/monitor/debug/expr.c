@@ -123,7 +123,7 @@ static bool make_token(char *e) {
 			return false;
 		}
 	}
-	printf("number of token:%d\n",nr_token);
+	// printf("number of token:%d\n",nr_token);
 	return true; 
 }
 // uint32_t eval(p, q) {
