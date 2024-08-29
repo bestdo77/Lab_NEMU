@@ -138,6 +138,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	uint32_t anspos=0;
 	int nowtype=NOTYPE,l=0,r=0;//左右括号的数量
 	int i;
+	debug;
 	for(i=q;i>=p;i--){
 		if(tokens[i].type!=NUM&&tokens[i].type!=NOTYPE){
 			if(tokens[i].type==LEFT){
@@ -160,7 +161,6 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 			}
 		}
 	}
-	debug;
 	return anspos;
 }
 uint32_t eval(p, q) {
