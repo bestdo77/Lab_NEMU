@@ -162,7 +162,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 				}
 			}
 		}
-		printf("token%d: %s,anspos:%d\n",tokens[i].type,tokens[i].str,anspos);
+		// printf("token%d: %s,anspos:%d\n",tokens[i].type,tokens[i].str,anspos);
 	}
 	return anspos;
 }
@@ -178,7 +178,7 @@ uint32_t eval(p, q) {
 			* For now this token should be a number.
 			* Return the value of the number.
 			*/
-			printf("value:%d\n",atoi(tokens[p].str));
+			// printf("value:%d\n",atoi(tokens[p].str));
 			return atoi(tokens[p].str);//直接转成数字
 		}
 		else if (check_parentheses(p, q) == true) {
@@ -190,7 +190,7 @@ uint32_t eval(p, q) {
 		else {
 			/* We should do more things here. */
 			uint32_t op=find_domanit(p,q);
-			printf("op:%d\n",op);
+			// printf("op:%d\n",op);
 			uint32_t val1=eval(p,op-1),val2=eval(op+1,q);
 			switch(tokens[op].type){
 				// debug;
