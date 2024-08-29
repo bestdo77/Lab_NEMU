@@ -160,6 +160,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 			}
 		}
 	}
+	debug;
 	return anspos;
 }
 uint32_t eval(p, q) {
@@ -185,7 +186,6 @@ uint32_t eval(p, q) {
 		}
 		else {
 			/* We should do more things here. */
-			debug;
 			uint32_t op=find_domanit(p,q);
 			printf("op:%d\n",op);
 			uint32_t val1=eval(p,op-1),val2=eval(op+1,q);
