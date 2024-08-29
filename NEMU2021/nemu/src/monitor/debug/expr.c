@@ -73,61 +73,50 @@ int nr_token;
 static bool make_token(char *e) {
 	int position = 0;
 	int i;
-	regmatch_t pmatch;//储存匹配结果
-	// debug;
-	nr_token = 0;//已有的token数量
+	regmatch_t pmatch; // 储存匹配结果
 
-	while(e[position] != '\0') {
-		/* Try all rules one by one. */
-		for(i = 0; i < NR_REGEX; i ++) {//遍历所有正则表达式规则
-			if(regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
-				char *substr_start = e + position;//匹配成功子串的起始地址
-				int substr_len = pmatch.rm_eo;//匹配成功字符串长度
+	nr_token = 0; // 已有的token数量
+
+	while (e[position] != '\0') {
+		for (i = 0; i < NR_REGEX; i++) {
+			if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
+				char *substr_start = e + position; // 匹配成功子串的起始地址
+				int substr_len = pmatch.rm_eo; // 匹配成功字符串长度
 
 				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
-				//匹配成功的日志
+
 				position += substr_len;
-				if(rules[i].token_type==NOTYPE) break;
-				/* TODO: Now a new token is recognized with rules[i]. Add codes
-				 * to record the token in the array `tokens'. For certain types
-				 * of tokens, some extra actions should be performed.
-				 */
-				if(nr_token<32){
-					strncpy(tokens[nr_token].str,substr_start,substr_len);//复制一段
-					tokens[nr_token].str[substr_len-1]='\0';//给字符串结尾
-					tokens[nr_token].type=rules[i].token_type;
+				if (rules[i].token_type == NOTYPE) break;
+
+				/* 确保不会超过数组的最大容量。 */
+				if (nr_token < 32) {
+					/* 确保字符串加上终止符不会超出容量。 */
+					if (substr_len < 32) {
+						strncpy(tokens[nr_token].str, substr_start, substr_len);
+						tokens[nr_token].str[substr_len] = '\0'; // 确保字符串以空字符结束
+					} else {
+						// 如果字符串长度等于最大长度，手动添加终止符
+						strncpy(tokens[nr_token].str, substr_start, 31);
+						tokens[nr_token].str[31] = '\0';
+					}
+					tokens[nr_token].type = rules[i].token_type;
 					nr_token++;
-				}else{
+				} else {
 					printf("too much tokens\n");
 					assert(0);
-				}
-				switch(rules[i].token_type) {
-					case NOTYPE:{
-						assert(0);
-						break;
-					}
-					case NUM:break;
-					case ADD:break;
-					case SUB:break;
-					case MUL:break;
-					case DIV:break;
-					case LEFT:break;
-					case RIGHT:break;
-					case EQ:break;
-					default: panic("please implement me");
 				}
 
 				break;
 			}
 		}
 
-		if(i == NR_REGEX) {
+		if (i == NR_REGEX) {
 			printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
 			return false;
 		}
 	}
-	printf("number of token:%d\n",nr_token);
-	return true; 
+	printf("number of token:%d\n", nr_token);
+	return true;
 }
 bool check_parentheses(uint32_t p,uint32_t q){
 	if(tokens[p].type != LEFT  || tokens[q].type != RIGHT)
@@ -186,7 +175,7 @@ uint32_t eval(p, q) {
 			* For now this token should be a number.
 			* Return the value of the number.
 			*/
-			printf("value:%d\n",atoi(tokens[p].str));
+			// printf("value:%d\n",atoi(tokens[p].str));
 			return atoi(tokens[p].str);//直接转成数字
 		}
 		else if (check_parentheses(p, q) == true) {
