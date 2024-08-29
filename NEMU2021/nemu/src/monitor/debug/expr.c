@@ -195,9 +195,9 @@ int eval(p, q) {
 			* For now this token should be a number.
 			* Return the value of the number.
 			*/
-			// printf("value:%d\n",atoi(tokens[p].str));
 			int p=atoi(tokens[p].str);
 			if(tokens[p].fu) p=-p;
+			printf("value:%d\n",p);
 			return p;//直接转成数字
 		}
 		else if (check_parentheses(p, q) == true) {
