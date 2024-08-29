@@ -154,8 +154,8 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 				nowtype=tokens[i].type;
 				anspos=i;
 			}else{
-				if(nowtype==ADD||nowtype==SUB){
-					if(tokens[i].type==MUL||tokens[i].type==DIV){
+				if(nowtype==MUL||nowtype==DIV){
+					if(tokens[i].type==ADD||tokens[i].type==SUB){
 						nowtype=tokens[i].type;
 						anspos=i;
 					}
