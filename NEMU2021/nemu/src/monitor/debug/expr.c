@@ -74,7 +74,7 @@ static bool make_token(char *e) {
 	int position = 0;
 	int i;
 	regmatch_t pmatch;//储存匹配结果
-	debug;
+	// debug;
 	nr_token = 0;//已有的token数量
 
 	while(e[position] != '\0') {
@@ -196,7 +196,7 @@ uint32_t eval(p, q) {
 		else {
 			/* We should do more things here. */
 			uint32_t op=find_domanit(p,q);
-			uint32_t val1=eval(p,op-1),val2=eval(op,q);
+			uint32_t val1=eval(p,op-1),val2=eval(op+1,q);
 			switch(tokens[op].type){
 				case ADD: return val1+val2;
 				case SUB: return val1-val2;

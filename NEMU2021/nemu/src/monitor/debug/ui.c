@@ -77,7 +77,7 @@ static int cmd_p(char *args){
 	bool* p=&success;
 	// debug;
 	printf("%d\n",expr(args,p));
-	debug;
+	// debug;
 	return 0;
 }
 static struct {
