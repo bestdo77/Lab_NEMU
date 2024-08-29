@@ -72,7 +72,7 @@ void init_regex() {
 }
 
 typedef struct token {
-	int fu;
+	// int fu;
 	int type;
 	char str[32];
 } Token;
@@ -86,7 +86,6 @@ static bool make_token(char *e) {
 	regmatch_t pmatch; // 储存匹配结果
 
 	nr_token = 0; // 已有的token数量
-	bool fu=0;
 	while (e[position] != '\0') {
 		for (i = 0; i < NR_REGEX; i++) {
 			if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
@@ -110,20 +109,21 @@ static bool make_token(char *e) {
 						tokens[nr_token].str[31] = '\0';
 					}
 					tokens[nr_token].type = rules[i].token_type;
-					if(tokens[nr_token].type==NUM&&fu==1){
-						tokens[nr_token].fu=1;
-						fu=0;
-					}
+					// if(tokens[nr_token].type==NUM&&fu==1){
+					// 	tokens[nr_token].fu=1;
+					// 	fu=0;
+					// }
 					nr_token++;
 				} else {
 					printf("too much tokens\n");
 					assert(0);
 				}
 				// fu=0;
-				if(strcmp(tokens[nr_token-1].str,"-")==0&&(nr_token==1||tokens[nr_token-2].type!=NUM)){//如果当前是负号，且上一个为空或不是数字
-					fu=1;
-					nr_token--;
-				}
+				// if(strcmp(tokens[nr_token-1].str,"-")==0&&(nr_token==1||tokens[nr_token-2].type!=NUM)){//如果当前是负号，且上一个为空或不是数字
+				// 	fu=1;
+				// 	nr_token--;
+				// }
+
 				break;
 			}
 		}
@@ -221,7 +221,7 @@ int eval(p, q) {
 			* Return the value of the number.
 			*/
 			int t=atoi(tokens[p].str);
-			if(tokens[p].fu==1) t=-t;
+			// if(tokens[p].fu==1) t=-t;
 			// printf("value:%d\n",t);
 			return t;//直接转成数字
 		}
