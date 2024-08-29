@@ -175,7 +175,7 @@ uint32_t eval(p, q) {
 			* For now this token should be a number.
 			* Return the value of the number.
 			*/
-			// printf("value:%d\n",atoi(tokens[p].str));
+			printf("value:%d\n",atoi(tokens[p].str));
 			return atoi(tokens[p].str);//直接转成数字
 		}
 		else if (check_parentheses(p, q) == true) {
@@ -208,10 +208,10 @@ uint32_t expr(char *e, bool *success) {
 		return 0;
 	}
 	/* TODO: Insert codes to evaluate the expression. */
-	int i;
-	for(i=0;i<nr_token;i++){
-		printf("token%d: %s",tokens[i].type,tokens[i].str);
-	}
+	// int i;
+	// for(i=0;i<nr_token;i++){
+	// 	printf("token%d: %s",tokens[i].type,tokens[i].str);
+	// }
 	return eval(0,nr_token-1);
 	panic("please implement me");
 	return 0;
