@@ -112,13 +112,14 @@ static bool make_token(char *e) {
 					tokens[nr_token].type = rules[i].token_type;
 					if(tokens[nr_token].type==NUM&&fu==1){
 						tokens[nr_token].fu=1;
+						fu=0;
 					}
 					nr_token++;
 				} else {
 					printf("too much tokens\n");
 					assert(0);
 				}
-				fu=0;
+				// fu=0;
 				if(strcmp(tokens[nr_token-1].str,"-")==0&&(nr_token==1||strcmp(tokens[nr_token-2].str,"-")==0)){//如果当前是负号，且上一个为空或减号
 					fu=1;
 					nr_token--;
