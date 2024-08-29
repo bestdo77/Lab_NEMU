@@ -139,7 +139,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	int nowtype=NOTYPE,l=0,r=0;//左右括号的数量
 	uint32_t i;
 	// debug;
-	printf("p:%d q:%d\n",p,q);
+	// printf("p:%d q:%d\n",p,q);
 	for(i=q;i>=p+1;i--){
 		// debug
 		if(tokens[i].type!=NUM&&tokens[i].type!=NOTYPE){
