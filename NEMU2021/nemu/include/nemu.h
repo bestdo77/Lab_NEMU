@@ -5,4 +5,5 @@
 #include "memory/memory.h"
 #include "cpu/reg.h"
 #include <stdlib.h>
+#define debug printf("debug!!!\n");
 #endif

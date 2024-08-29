@@ -75,6 +75,7 @@ static int cmd_help(char *args);
 static int cmd_p(char *args){
 	bool success=true;
 	bool* p=&success;
+	debug;
 	printf("%d\n",expr(args,p));
 	return 0;
 }
