@@ -196,10 +196,10 @@ int eval(p, q) {
 			* For now this token should be a number.
 			* Return the value of the number.
 			*/
-			int p=atoi(tokens[p].str);
-			if(tokens[p].fu==1) p=-p;
-			printf("value:%d\n",p);
-			return p;//直接转成数字
+			int t=atoi(tokens[p].str);
+			if(tokens[p].fu==1) t=-t;
+			printf("value:%d\n",t);
+			return t;//直接转成数字
 		}
 		else if (check_parentheses(p, q) == true) {
 			/* The expression is surrounded by a matched pair of parentheses.
