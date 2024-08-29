@@ -140,7 +140,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	uint32_t i;
 	// debug;
 	printf("p:%d q:%d\n",p,q);
-	for(i=q;i>=p;i--){
+	for(i=q+1;i>=p;i--){
 		debug
 		if(tokens[i].type!=NUM&&tokens[i].type!=NOTYPE){
 			if(tokens[i].type==LEFT){
