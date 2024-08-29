@@ -7,6 +7,7 @@
 #include <regex.h>
 
 enum {
+	/* TODO: Add more token types */
 	NUM = 0,
 	NOTYPE = 1,
 	ADD = 2,
@@ -21,7 +22,6 @@ enum {
 	OR = 11,
 	NOT = 12,
 	XING = 13,//解引用
-	/* TODO: Add more token types */
 
 };
 
@@ -172,12 +172,41 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 				nowtype=tokens[i].type;
 				anspos=i;
 			}else{
-				if(nowtype==MUL||nowtype==DIV){
-					if(tokens[i].type==ADD||tokens[i].type==SUB){
-						nowtype=tokens[i].type;
-						anspos=i;
-					}
-				}
+				 switch (tokens[i].type) {
+                        case ADD:
+                        case SUB:
+                            // 加减运算符的优先级低于乘除
+                            if (nowtype != MUL && nowtype != DIV) {
+                                nowtype = tokens[i].type;
+                                anspos = i;
+                            }
+                            break;
+                        case MUL:
+                        case DIV:
+                            // 乘除运算符的优先级低于比较
+                            if (nowtype != EQ && nowtype != NEQ) {
+                                nowtype = tokens[i].type;
+                                anspos = i;
+                            }
+                            break;
+                        case EQ:
+                        case NEQ:
+                            // 比较运算符的优先级低于逻辑与或
+                            if (nowtype != AND && nowtype != OR) {
+                                nowtype = tokens[i].type;
+                                anspos = i;
+                            }
+                            break;
+                        case AND:
+                        case OR:
+                            // 逻辑与或运算符的优先级最低
+                            nowtype = tokens[i].type;
+                            anspos = i;
+                            break;
+                        default:
+							printf("No operator\n");
+							assert(0);
+                    }
 			}
 		}
 		// printf("token%d: %s,anspos:%d,fu:%d\n",tokens[i].type,tokens[i].str,anspos,tokens[i].fu);
@@ -218,6 +247,10 @@ int eval(p, q) {
 				case SUB: return val1-val2;
 				case MUL: return val1*val2;
 				case DIV: return val1/val2;
+				case EQ: return val1==val2;
+				case NEQ: return val1!=val2;
+				case AND: return val1&&val2;
+				case OR: return val1||val2;
 				default:{
 					printf("type of domanit is:%d\n",tokens[op].type);
 					assert(0);
