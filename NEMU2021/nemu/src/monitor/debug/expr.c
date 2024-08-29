@@ -179,7 +179,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 				}
 			}
 		}
-		// printf("token%d: %s,anspos:%d\n",tokens[i].type,tokens[i].str,anspos);
+		printf("token%d: %s,anspos:%d\n",tokens[i].type,tokens[i].str,anspos);
 	}
 	return anspos;
 }
