@@ -120,7 +120,7 @@ static bool make_token(char *e) {
 					assert(0);
 				}
 				// fu=0;
-				if(strcmp(tokens[nr_token-1].str,"-")==0&&(nr_token==1||tokens[nr_token-2].type==NUM)){//如果当前是负号，且上一个为空或不是数字
+				if(strcmp(tokens[nr_token-1].str,"-")==0&&(nr_token==1||tokens[nr_token-2].type!=NUM)){//如果当前是负号，且上一个为空或不是数字
 					fu=1;
 					nr_token--;
 				}
