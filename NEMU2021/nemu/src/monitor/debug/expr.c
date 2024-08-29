@@ -126,7 +126,7 @@ static bool make_token(char *e) {
 			return false;
 		}
 	}
-	printf("number of token:%d\n",nr_token);
+	// printf("number of token:%d\n",nr_token);
 	return true; 
 }
 bool check_parentheses(uint32_t p,uint32_t q){
@@ -198,6 +198,7 @@ uint32_t eval(p, q) {
 			uint32_t op=find_domanit(p,q);
 			uint32_t val1=eval(p,op-1),val2=eval(op+1,q);
 			switch(tokens[op].type){
+				debug;
 				case ADD: return val1+val2;
 				case SUB: return val1-val2;
 				case MUL: return val1*val2;
