@@ -141,7 +141,6 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	// debug;
 	for(i=q;i>=p;i--){
 		debug
-		printf("token%d: %s",tokens[i].type,tokens[i].str);
 		if(tokens[i].type!=NUM&&tokens[i].type!=NOTYPE){
 			if(tokens[i].type==LEFT){
 				l++;continue;
@@ -162,6 +161,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 				}
 			}
 		}
+		printf("token%d: %s,anspos:%d\n",tokens[i].type,tokens[i].str,anspos);
 	}
 	return anspos;
 }
