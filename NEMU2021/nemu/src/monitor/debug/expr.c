@@ -247,10 +247,10 @@ int eval(p, q) {
 				case SUB: return val1-val2;
 				case MUL: return val1*val2;
 				case DIV: return val1/val2;
-				case EQ: return (val1==val2);
-				case NEQ: return (val1!=val2);
-				case AND: return (val1&&val2);
-				case OR: return (val1||val2);
+				case EQ: return (int)(val1==val2);
+				case NEQ: return (int)(val1!=val2);
+				case AND: return (int)(val1&&val2);
+				case OR: return (int)(val1||val2);
 				default:{
 					printf("type of domanit is:%d\n",tokens[op].type);
 					assert(0);
