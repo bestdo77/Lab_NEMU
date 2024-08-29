@@ -74,7 +74,7 @@ static bool make_token(char *e) {
 	int position = 0;
 	int i;
 	regmatch_t pmatch;//储存匹配结果
-	
+	debug;
 	nr_token = 0;//已有的token数量
 
 	while(e[position] != '\0') {
