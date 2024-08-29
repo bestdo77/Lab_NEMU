@@ -75,7 +75,7 @@ static int cmd_help(char *args);
 static int cmd_p(char *args){
 	bool success=true;
 	bool* p=&success;
-	expr(args,p);
+	printf("%d\n",expr(args,p));
 	return 0;
 }
 static struct {
