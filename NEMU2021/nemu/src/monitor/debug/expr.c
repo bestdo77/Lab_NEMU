@@ -124,7 +124,6 @@ static bool make_token(char *e) {
 					fu=1;
 					nr_token--;
 				}
-
 				break;
 			}
 		}
@@ -174,6 +173,9 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 				anspos=i;
 			}else{
 				 switch (tokens[i].type) {
+						case NOT:
+						case XING:
+							break;
 						case MUL:
                         case DIV:
 							break;
@@ -223,6 +225,12 @@ int eval(p, q) {
 			*/
 			int t=atoi(tokens[p].str);
 			if(tokens[p].fu==1) t=-t;
+			// if(p!=0){
+			// 	if(tokens[p-1].type==NOT){
+			// 		t=(!t);
+			// 	}
+			// 	if(tokens[p-1].type)
+			// }
 			// printf("value:%d\n",t);
 			return t;//直接转成数字
 		}
