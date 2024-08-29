@@ -15,8 +15,12 @@ enum {
 	DIV = 5,
 	LEFT = 6 ,
 	RIGHT = 7,
-	EQ = 8
-
+	EQ = 8,
+	NEQ = 9,
+	AND = 10,
+	OR = 11,
+	NOT = 12,
+	XING = 13,//解引用
 	/* TODO: Add more token types */
 
 };
@@ -32,13 +36,18 @@ static struct rule {
 
 	{"[0-9]+", NUM},            // 数字
 	{" +", NOTYPE},           // 空白字符
-    {"\\+", ADD},             // 加号
-    {"-", SUB},               // 减号
-    {"\\*", MUL},             // 乘号
-    {"/", DIV},               // 除号
-    {"\\(", LEFT},            // 左括号
-    {"\\)", RIGHT},           // 右括号
-    {"==", EQ},               // 等于
+	{"\\+", ADD},             // 加号
+	{"-", SUB},               // 减号
+	{"\\*", MUL},             // 乘号
+	{"/", DIV},               // 除号
+	{"\\(", LEFT},            // 左括号
+	{"\\)", RIGHT},           // 右括号
+	{"==", EQ},               // 等于
+	{"!=", NEQ},              // 不等于
+	{"&&", AND},              // 逻辑与
+	{"\\|\\|", OR},           // 逻辑或
+	{"!", NOT},               // 逻辑非
+	{"\\*", XING},            // 解引用
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -63,6 +72,7 @@ void init_regex() {
 }
 
 typedef struct token {
+	int fu;
 	int type;
 	char str[32];
 } Token;
@@ -76,7 +86,7 @@ static bool make_token(char *e) {
 	regmatch_t pmatch; // 储存匹配结果
 
 	nr_token = 0; // 已有的token数量
-
+	bool fu=0;
 	while (e[position] != '\0') {
 		for (i = 0; i < NR_REGEX; i++) {
 			if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
@@ -100,12 +110,19 @@ static bool make_token(char *e) {
 						tokens[nr_token].str[31] = '\0';
 					}
 					tokens[nr_token].type = rules[i].token_type;
+					if(tokens[nr_token].type==NUM&&fu==1){
+						tokens[nr_token].fu=1;
+					}
 					nr_token++;
 				} else {
 					printf("too much tokens\n");
 					assert(0);
 				}
-
+				fu=0;
+				if(strcmp(tokens[nr_token-1].str,"-")==0&&(nr_token==1||strcmp(tokens[nr_token-2].str,"-")==0)){//如果当前是负号，且上一个为空或减号
+					fu=1;
+					nr_token--;
+				}
 				break;
 			}
 		}
@@ -166,7 +183,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	}
 	return anspos;
 }
-uint32_t eval(p, q) {
+int eval(p, q) {
 		if (p > q) {
 			/* Bad expression */
 			printf("Bad experssion\n");
@@ -179,7 +196,9 @@ uint32_t eval(p, q) {
 			* Return the value of the number.
 			*/
 			// printf("value:%d\n",atoi(tokens[p].str));
-			return atoi(tokens[p].str);//直接转成数字
+			int p=atoi(tokens[p].str);
+			if(tokens[p].fu) p=-p;
+			return p;//直接转成数字
 		}
 		else if (check_parentheses(p, q) == true) {
 			/* The expression is surrounded by a matched pair of parentheses.
@@ -205,7 +224,7 @@ uint32_t eval(p, q) {
 			}
 		}
 	}
-uint32_t expr(char *e, bool *success) {
+int expr(char *e, bool *success) {
 	if(!make_token(e)) {
 		*success = false;
 		return 0;
