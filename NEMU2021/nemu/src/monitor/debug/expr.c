@@ -174,6 +174,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	return anspos;
 }
 uint32_t eval(p, q) {
+		debug;
 		if (p > q) {
 			/* Bad expression */
 			printf("Bad experssion\n");
@@ -198,7 +199,7 @@ uint32_t eval(p, q) {
 			uint32_t op=find_domanit(p,q);
 			uint32_t val1=eval(p,op-1),val2=eval(op+1,q);
 			switch(tokens[op].type){
-				debug;
+				// debug;
 				case ADD: return val1+val2;
 				case SUB: return val1-val2;
 				case MUL: return val1*val2;
