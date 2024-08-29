@@ -268,6 +268,7 @@ int expr(char *e, bool *success) {
 	// for(i=0;i<nr_token;i++){
 	// 	printf("token%d: %s",tokens[i].type,tokens[i].str);
 	// }
+	printf("%d\n",(2||0));
 	return eval(0,nr_token-1);
 	panic("please implement me");
 	return 0;
