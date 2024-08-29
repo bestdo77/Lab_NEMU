@@ -179,7 +179,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 				}
 			}
 		}
-		printf("token%d: %s,anspos:%d\n",tokens[i].type,tokens[i].str,anspos);
+		printf("token%d: %s,anspos:%d,fu:%d\n",tokens[i].type,tokens[i].str,anspos,tokens[i].fu);
 	}
 	return anspos;
 }
@@ -196,7 +196,7 @@ int eval(p, q) {
 			* Return the value of the number.
 			*/
 			int p=atoi(tokens[p].str);
-			if(tokens[p].fu) p=-p;
+			if(tokens[p].fu==1) p=-p;
 			printf("value:%d\n",p);
 			return p;//直接转成数字
 		}
