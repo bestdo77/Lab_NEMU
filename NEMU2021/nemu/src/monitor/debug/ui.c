@@ -90,7 +90,7 @@ static struct {
 	{"si", "Next step",cmd_si},
 	{"info","print all reg status",cmd_info},
 	{"x","show next 'n' adress",cmd_x},
-	{"p","Analyze regular expression",cmd_p}
+	{"p","Analyze regular expression",cmd_p},
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))

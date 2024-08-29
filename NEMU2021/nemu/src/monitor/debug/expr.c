@@ -87,7 +87,7 @@ static bool make_token(char *e) {
 				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 				//匹配成功的日志
 				position += substr_len;
-
+				if(rules[i].token_type==NOTYPE) break;
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
 				 * to record the token in the array `tokens'. For certain types
 				 * of tokens, some extra actions should be performed.
@@ -99,7 +99,10 @@ static bool make_token(char *e) {
 					nr_token++;
 				}
 				switch(rules[i].token_type) {
-					case NOTYPE:break;
+					case NOTYPE:{
+						assert(0);
+						break;
+					}
 					case NUM:break;
 					case ADD:break;
 					case SUB:break;
@@ -123,7 +126,26 @@ static bool make_token(char *e) {
 
 	return true; 
 }
-
+// uint32_t eval(p, q) {
+// 		if (p > q) {
+// 			/* Bad expression */
+// 		}
+// 		else if (p == q) {
+// 			/* Single token.
+// 			* For now this token should be a number.
+// 			* Return the value of the number.
+// 			*/
+// 		}
+// 		else if (check_parentheses(p, q) == true) {
+// 			/* The expression is surrounded by a matched pair of parentheses.
+// 			* If that is the case, just throw away the parentheses.
+// 			*/
+// 			return eval(p + 1, q - 1);
+// 		}
+// 		else {
+// 			/* We should do more things here. */
+// 		}
+// 	}
 uint32_t expr(char *e, bool *success) {
 	if(!make_token(e)) {
 		*success = false;
@@ -131,26 +153,6 @@ uint32_t expr(char *e, bool *success) {
 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
-	eval(p, q) {
-		if (p > q) {
-			/* Bad expression */
-		}
-		else if (p == q) {
-			/* Single token.
-			* For now this token should be a number.
-			* Return the value of the number.
-			*/
-		}
-		else if (check_parentheses(p, q) == true) {
-			/* The expression is surrounded by a matched pair of parentheses.
-			* If that is the case, just throw away the parentheses.
-			*/
-			return eval(p + 1, q - 1);
-		}
-		else {
-			/* We should do more things here. */
-		}
-	}
 	panic("please implement me");
 	return 0;
 }
