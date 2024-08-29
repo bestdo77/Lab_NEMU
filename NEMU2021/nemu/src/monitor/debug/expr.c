@@ -180,7 +180,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 				}
 			}
 		}
-		printf("token%d: %s,anspos:%d,fu:%d\n",tokens[i].type,tokens[i].str,anspos,tokens[i].fu);
+		// printf("token%d: %s,anspos:%d,fu:%d\n",tokens[i].type,tokens[i].str,anspos,tokens[i].fu);
 	}
 	return anspos;
 }
@@ -198,7 +198,7 @@ int eval(p, q) {
 			*/
 			int t=atoi(tokens[p].str);
 			if(tokens[p].fu==1) t=-t;
-			printf("value:%d\n",t);
+			// printf("value:%d\n",t);
 			return t;//直接转成数字
 		}
 		else if (check_parentheses(p, q) == true) {
