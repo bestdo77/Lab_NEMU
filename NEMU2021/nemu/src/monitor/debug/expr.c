@@ -186,6 +186,7 @@ uint32_t eval(p, q) {
 			* For now this token should be a number.
 			* Return the value of the number.
 			*/
+			printf("value:%d\n",atoi(tokens[p].str));
 			return atoi(tokens[p].str);//直接转成数字
 		}
 		else if (check_parentheses(p, q) == true) {
