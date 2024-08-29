@@ -7,8 +7,8 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256,
-	NUM = 1,
+	NUM = 0,
+	NOTYPE = 1,
 	ADD = 2,
 	SUB = 3,
 	MUL = 4,
@@ -97,6 +97,9 @@ static bool make_token(char *e) {
 					tokens[nr_token].str[substr_len-1]='\0';//给字符串结尾
 					tokens[nr_token].type=rules[i].token_type;
 					nr_token++;
+				}else{
+					printf("too much tokens\n");
+					assert(0);
 				}
 				switch(rules[i].token_type) {
 					case NOTYPE:{
@@ -126,33 +129,93 @@ static bool make_token(char *e) {
 	// printf("number of token:%d\n",nr_token);
 	return true; 
 }
-// uint32_t eval(p, q) {
-// 		if (p > q) {
-// 			/* Bad expression */
-// 		}
-// 		else if (p == q) {
-// 			/* Single token.
-// 			* For now this token should be a number.
-// 			* Return the value of the number.
-// 			*/
-// 		}
-// 		else if (check_parentheses(p, q) == true) {
-// 			/* The expression is surrounded by a matched pair of parentheses.
-// 			* If that is the case, just throw away the parentheses.
-// 			*/
-// 			return eval(p + 1, q - 1);
-// 		}
-// 		else {
-// 			/* We should do more things here. */
-// 		}
-// 	}
+uint32_t check_parentheses(uint32_t p,uint32_t q){
+	if(tokens[p].type != LEFT  || tokens[q].type != RIGHT)
+        return false;
+    int l = p , r = q;
+    while(l < r)
+    {
+        if(tokens[l].type == LEFT){
+            if(tokens[r].type == RIGHT){
+                l++ , r--;
+                continue;
+            }else r--;
+        }else if(tokens[l].type == LEFT) return false;
+        else l ++;
+    }
+    return true;
+}//看看p，q中间是否都是配对好的括号
+uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
+	uint32_t anspos=0;
+	int nowtype=NOTYPE,l=0,r=0;//左右括号的数量
+	int i;
+	for(i=q;i>=p;i--){
+		if(tokens[i].type!=NUM&&tokens[i].type!=NOTYPE){
+			if(tokens[i].type==LEFT){
+				l++;continue;
+			}
+			if(tokens[i].type==RIGHT){
+				r++;continue;
+			}
+			if(l!=r) continue;
+			if(nowtype==NOTYPE){
+				nowtype=tokens[i].type;
+				anspos=i;
+			}else{
+				if(nowtype==ADD||nowtype==SUB){
+					if(tokens[i].type==MUL||tokens[i].type==DIV){
+						nowtype=tokens[i].type;
+						anspos=i;
+					}
+				}
+			}
+		}
+	}
+	return anspos;
+}
+uint32_t eval(p, q) {
+		if (p > q) {
+			/* Bad expression */
+			printf("Bad experssion\n");
+			assert(0);
+			return -1;
+		}
+		else if (p == q) {
+			/* Single token.
+			* For now this token should be a number.
+			* Return the value of the number.
+			*/
+			return atoi(tokens[p].str);//直接转成数字
+		}
+		else if (check_parentheses(p, q) == true) {
+			/* The expression is surrounded by a matched pair of parentheses.
+			* If that is the case, just throw away the parentheses.
+			*/
+			return eval(p + 1, q - 1);
+		}
+		else {
+			/* We should do more things here. */
+			uint32_t op=find_domanit(p,q);
+			uint32_t val1=eval(p,op-1),val2=eval(op,q);
+			switch(tokens[op].type){
+				case ADD: return val1+val2;
+				case SUB: return val1-val2;
+				case MUL: return val1*val2;
+				case DIV: return val1/val2;
+				default:{
+					printf("type of domanit is:%d\n",tokens[op].type);
+					assert(0);
+				}
+			}
+		}
+	}
 uint32_t expr(char *e, bool *success) {
 	if(!make_token(e)) {
 		*success = false;
 		return 0;
 	}
 	/* TODO: Insert codes to evaluate the expression. */
+	return eval(0,nr_token-1);
 	panic("please implement me");
 	return 0;
 }
-
