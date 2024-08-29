@@ -129,7 +129,7 @@ static bool make_token(char *e) {
 	// printf("number of token:%d\n",nr_token);
 	return true; 
 }
-uint32_t check_parentheses(uint32_t p,uint32_t q){
+bool check_parentheses(uint32_t p,uint32_t q){
 	if(tokens[p].type != LEFT  || tokens[q].type != RIGHT)
         return false;
     int l = p , r = q;
