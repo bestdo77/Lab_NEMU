@@ -170,7 +170,6 @@ uint32_t eval(p, q) {
 			return -1;
 		}
 		else if (p == q) {
-			debug;
 			/* Single token.
 			* For now this token should be a number.
 			* Return the value of the number.
@@ -186,6 +185,7 @@ uint32_t eval(p, q) {
 		}
 		else {
 			/* We should do more things here. */
+			debug;
 			uint32_t op=find_domanit(p,q);
 			printf("op:%d\n",op);
 			uint32_t val1=eval(p,op-1),val2=eval(op+1,q);
