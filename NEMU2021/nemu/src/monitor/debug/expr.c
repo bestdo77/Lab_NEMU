@@ -163,7 +163,6 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	return anspos;
 }
 uint32_t eval(p, q) {
-		debug;
 		if (p > q) {
 			/* Bad expression */
 			printf("Bad experssion\n");
@@ -171,6 +170,7 @@ uint32_t eval(p, q) {
 			return -1;
 		}
 		else if (p == q) {
+			debug;
 			/* Single token.
 			* For now this token should be a number.
 			* Return the value of the number.
