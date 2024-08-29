@@ -173,18 +173,13 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 				anspos=i;
 			}else{
 				 switch (tokens[i].type) {
+						case MUL:
+                        case DIV:
+							break;
                         case ADD:
                         case SUB:
                             // 加减运算符的优先级低于乘除
-                            if (nowtype != MUL && nowtype != DIV) {
-                                nowtype = tokens[i].type;
-                                anspos = i;
-                            }
-                            break;
-                        case MUL:
-                        case DIV:
-                            // 乘除运算符的优先级低于比较
-                            if (nowtype != EQ && nowtype != NEQ) {
+                            if (nowtype == MUL || nowtype == DIV) {
                                 nowtype = tokens[i].type;
                                 anspos = i;
                             }
@@ -192,7 +187,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
                         case EQ:
                         case NEQ:
                             // 比较运算符的优先级低于逻辑与或
-                            if (nowtype != AND && nowtype != OR) {
+                            if (nowtype == MUL || nowtype == DIV || nowtype==ADD || nowtype==SUB ) {
                                 nowtype = tokens[i].type;
                                 anspos = i;
                             }
@@ -268,7 +263,7 @@ int expr(char *e, bool *success) {
 	// for(i=0;i<nr_token;i++){
 	// 	printf("token%d: %s",tokens[i].type,tokens[i].str);
 	// }
-	printf("%d\n",(2||0));
+	// printf("%d\n",(2||0));
 	return eval(0,nr_token-1);
 	panic("please implement me");
 	return 0;
