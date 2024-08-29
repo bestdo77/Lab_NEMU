@@ -126,7 +126,7 @@ static bool make_token(char *e) {
 			return false;
 		}
 	}
-	// printf("number of token:%d\n",nr_token);
+	printf("number of token:%d\n",nr_token);
 	return true; 
 }
 bool check_parentheses(uint32_t p,uint32_t q){
