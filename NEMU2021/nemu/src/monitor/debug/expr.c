@@ -118,7 +118,7 @@ static bool make_token(char *e) {
 					printf("too much tokens\n");
 					assert(0);
 				}
-				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
+				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[tokens[nr_token-1].type].regex, position, substr_len, substr_len, substr_start);
 				// fu=0;
 				if(strcmp(tokens[nr_token-1].str,"-")==0&&(nr_token==1||(tokens[nr_token-2].type!=NUM&&tokens[nr_token-2].type!=RIGHT))){//如果当前是负号，且上一个为空或不是数字
 					fu=1;
