@@ -41,6 +41,7 @@ static struct rule {
 	{"-", SUB},               // 减号
 	{"-",FU},				  // 负号在减号之后
 	{"\\*", MUL},             // 乘号
+	{"\\*", XING},            // 解引用在乘法之后
 	{"/", DIV},               // 除号
 	{"\\(", LEFT},            // 左括号
 	{"\\)", RIGHT},           // 右括号
@@ -49,7 +50,6 @@ static struct rule {
 	{"&&", AND},              // 逻辑与
 	{"\\|\\|", OR},           // 逻辑或
 	{"!", NOT},               // 逻辑非
-	{"\\*", XING},            // 解引用
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -218,7 +218,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
                     }
 			}
 		}
-		// printf("token%d: %s,anspos:%d\n",tokens[i].type,tokens[i].str,anspos);
+		printf("token%d: %s,anspos:%d\n",tokens[i].type,tokens[i].str,anspos);
 	}
 	return anspos;
 }
