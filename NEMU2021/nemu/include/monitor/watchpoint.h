@@ -4,12 +4,13 @@
 #include "common.h"
 
 typedef struct watchpoint {
-	int NO;
-	struct watchpoint *next;
+	int NO;//监视点序号
+	struct watchpoint *next;//链表下一个节点
 
 	/* TODO: Add more members if necessary */
-
-
-} WP;
-
+	char args[64];
+	int value;
+	bool vis;
+}WP;
+int judge_watchpoints();
 #endif
