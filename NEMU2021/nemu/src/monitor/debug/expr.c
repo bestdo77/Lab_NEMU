@@ -113,7 +113,7 @@ static bool make_token(char *e) {
 					if(tokens[nr_token].type==SUB){
 						if(nr_token==0||(tokens[nr_token-1].type!=NUM&&tokens[nr_token-1].type!=ADR&&tokens[nr_token-1].type!=RIGHT)){
 							tokens[nr_token].type=FU;
-							printf("FU\n");
+							// printf("FU\n");
 						}
 					}
 					nr_token++;
@@ -219,7 +219,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	return anspos;
 }
 int eval(p, q) {
-		printf("p:%d,q:%d\n",p,q);
+		// printf("p:%d,q:%d\n",p,q);
 		if (p > q) {
 			/* Bad expression */
 			printf("Bad experssion\n");
