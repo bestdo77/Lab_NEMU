@@ -36,7 +36,7 @@ void new_wp(char* args) {
     wp->value = expr(wp->args, &success);
 
     // 将新的 watchpoint 添加到链表头部
-    head->next = wp;
+    wp->next = head;
     head = wp;
 	printf("watchpoint %d added\n",wp->NO);
 }
