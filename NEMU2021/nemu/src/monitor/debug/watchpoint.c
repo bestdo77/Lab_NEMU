@@ -54,6 +54,8 @@ void free_wp(int n){
 			prev->next = wp->next;
 		}
 	}
+	wp->next = free_;
+    free_ = wp;
 	printf("watchpoint %d deleted\n",n);
 }
 
