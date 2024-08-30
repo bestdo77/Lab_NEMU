@@ -230,7 +230,12 @@ int eval(p, q) {
 			* For now this token should be a number.
 			* Return the value of the number.
 			*/
-			int t=atoi(tokens[p].str);
+			int t;
+			if(tokens[p].type==NUM){
+				t=atoi(tokens[p].str);
+			}else{
+				sscanf(tokens[p].str,"%x",&t);
+			}
 			// if(tokens[p].fu==1){
 			// 	t=-t;
 			// 	tokens[p].fu=0;
@@ -248,10 +253,11 @@ int eval(p, q) {
 			/* We should do more things here. */
 			if(tokens[p].type==NOT){
 				return (!eval(p+1,q));
-			}
-			if(tokens[p].type==FU){
-				printf("FU\n");
+			}else if(tokens[p].type==FU){
+				// printf("FU\n");
 				return (-eval(p+1,q));
+			}else if(tokens[p].type==XING){
+				return (swaddr_read(eval(p+1,q),4));
 			}
 			int op=find_domanit(p,q);
 			// printf("op:%d\n",op);
