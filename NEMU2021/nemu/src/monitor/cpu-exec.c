@@ -73,6 +73,7 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 		/* TODO: check watchpoints here. */
+		debug
 		int NO=judge_watchpoints();
 		if(NO){
 			printf("Hint watchpoint %d at address 0x%x\n",NO,cpu.eip);
