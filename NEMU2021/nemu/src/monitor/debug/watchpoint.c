@@ -60,10 +60,10 @@ void free_wp(int n){
 void print_watchpoints() {
     WP *current = head;
     while (current != NULL) {
-        printf("Watchpoint ID: %d, Args: %s, Value: %d",
-               current->NO, current->args, current->value);
+        printf("Watchpoint ID: %d, Args: %s, Value: %d\n",current->NO, current->args, current->value);
         current = current->next;
     }
+	printf("all watchpoint showed\n");
 }
 
 int judge_watchpoints(){
