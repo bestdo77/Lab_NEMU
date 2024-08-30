@@ -168,7 +168,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	// printf("p:%d q:%d\n",p,q);
 	for(i=q;i>=p+1;i--){
 		// debug
-		if(tokens[i].type!=NUM&&tokens[i].type!=NOTYPE&&tokens[i].type!=ADR){
+		if(tokens[i].type!=NUM&&tokens[i].type!=NOTYPE&&tokens[i].type!=ADR&&tokens[i].type!=REG){
 			if(tokens[i].type==LEFT){
 				l++;continue;
 			}
@@ -244,7 +244,7 @@ int eval(p, q) {
 				sscanf(tokens[p].str,"%x",&t);
 			}else{
 				if(strcmp(tokens[p].str,"$eax")){
-					printf("1\n");
+					// printf("1\n");
 					t=reg_l(R_EAX);
 				}else if(strcmp(tokens[p].str,"$ecx")){
 					t=reg_l(R_ECX);
