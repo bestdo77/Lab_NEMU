@@ -110,6 +110,11 @@ static bool make_token(char *e) {
 						tokens[nr_token].str[substr_len] = '\0'; // 确保字符串以空字符结束
 					}
 					tokens[nr_token].type = rules[i].token_type;
+					if(tokens[nr_token].type==SUB){
+						if(nr_token==0||tokens[nr_token-1].type==NUM||tokens[nr_token-1].type==ADR||tokens[nr_token-1].type==RIGHT){
+							tokens[nr_token-1].type=FU;
+						}
+					}
 					nr_token++;
 				} else {
 					printf("too much tokens\n");
@@ -171,10 +176,11 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 				 switch (tokens[i].type) {
 						case NOT:
 						case XING:
+						case FU:
 							break;
 						case MUL:
                         case DIV:
-							if(nowtype == NOT || nowtype == DIV){
+							if(nowtype == NOT || nowtype == DIV || nowtype == FU){
 								nowtype = tokens[i].type;
 								anspos = i;
 							}
@@ -182,7 +188,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
                         case ADD:
                         case SUB:
                             // 加减运算符的优先级低于乘除
-                            if (nowtype == MUL || nowtype == DIV || nowtype == NOT || nowtype == DIV) {
+                            if (nowtype == MUL || nowtype == DIV || nowtype == NOT || nowtype == DIV || nowtype == FU) {
                                 nowtype = tokens[i].type;
                                 anspos = i;
                             }
@@ -190,7 +196,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
                         case EQ:
                         case NEQ:
                             // 比较运算符的优先级低于逻辑与或
-                            if (nowtype == MUL || nowtype == DIV || nowtype==ADD || nowtype==SUB || nowtype == NOT || nowtype == DIV) {
+                            if (nowtype == MUL || nowtype == DIV || nowtype==ADD || nowtype==SUB || nowtype == NOT || nowtype == DIV || nowtype ==FU){
                                 nowtype = tokens[i].type;
                                 anspos = i;
                             }
@@ -241,6 +247,8 @@ int eval(p, q) {
 			/* We should do more things here. */
 			if(tokens[p].type==NOT){
 				return (!eval(p+1,q));
+			}else if(tokens[p].type==FU){
+				return -eval(p+1,q);
 			}
 			int op=find_domanit(p,q);
 			// printf("op:%d\n",op);
