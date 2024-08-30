@@ -38,6 +38,7 @@ void new_wp(char* args) {
     // 将新的 watchpoint 添加到链表头部
     wp->next = head;
     head = wp;
+	printf("watchpoint %d added\n",wp->NO);
 }
 void free_wp(int n){
 	WP *wp=&wp_pool[n];
@@ -52,7 +53,8 @@ void free_wp(int n){
 		if (prev->next == wp) {
 			prev->next = wp->next;
 		}
-	}	
+	}
+	printf("watchpoint %d deleted\n",n);
 }
 
 void print_watchpoints() {
