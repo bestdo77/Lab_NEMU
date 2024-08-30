@@ -292,19 +292,32 @@ int eval(p, q) {
 					int val1=eval(p,op-1),val2=eval(op+1,q);
 					return (int)(val1||val2);
 				}
-				case NOT: {
-					return (!eval(op+1,q));
-				}
-				case XING: {
-					return (swaddr_read(eval(op+1,q),4));
-				}
-				case FU:{
-					printf("FU\n");
-					return (-eval(op+1,q));
-				}
+				
 				default:{
-					printf("type of domanit is:%d\n",tokens[op].type);
-					assert(0);
+					int i;
+					for(i=p;i<=q;i++){
+						if(tokens[i].type==NOT||tokens[i].type==XING||tokens[i].type==FU){
+							op=i;
+							break;
+						}
+					}
+					switch (tokens[op].type)
+					{
+						case NOT: {
+							return (!eval(op+1,q));
+						}
+						case XING: {
+							return (swaddr_read(eval(op+1,q),4));
+						}
+						case FU:{
+							printf("FU\n");
+							return (-eval(op+1,q));
+						}
+						default:{
+							printf("type of domanit is:%d\n",tokens[op].type);
+							assert(0);
+						}
+					}
 				}
 			}
 		}
