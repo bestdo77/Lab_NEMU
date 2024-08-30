@@ -218,7 +218,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
                     }
 			}
 		}
-		printf("token%d: %s,anspos:%d\n",tokens[i].type,tokens[i].str,anspos);
+		// printf("token%d: %s,anspos:%d\n",tokens[i].type,tokens[i].str,anspos);
 	}
 	return anspos;
 }
@@ -245,7 +245,7 @@ int eval(p, q) {
 			// 	t=-t;
 			// 	tokens[p].fu=0;
 			// } 
-			printf("value:%d\n",t);
+			// printf("value:%d\n",t);
 			return t;//直接转成数字
 		}
 		else if (check_parentheses(p, q) == true) {
@@ -265,7 +265,7 @@ int eval(p, q) {
 				return (swaddr_read(eval(p+1,q),4));
 			}
 			int op=find_domanit(p,q);
-			// printf("op:%d\n",op);
+			printf("op:%d\n",op);
 			int val1=eval(p,op-1),val2=eval(op+1,q);
 			switch(tokens[op].type){
 				// debug;
