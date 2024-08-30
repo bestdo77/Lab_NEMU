@@ -257,7 +257,7 @@ int eval(p, q) {
 		else {
 			/* We should do more things here. */
 			int op=find_domanit(p,q);
-			printf("op:%d\n",op);
+			// printf("op:%d\n",op);
 			switch(tokens[op].type){
 				// debug;
 				case ADD: {
