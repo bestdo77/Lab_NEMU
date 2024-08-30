@@ -245,7 +245,7 @@ int eval(p, q) {
 			// 	t=-t;
 			// 	tokens[p].fu=0;
 			// } 
-			// printf("value:%d\n",t);
+			printf("value:%d\n",t);
 			return t;//直接转成数字
 		}
 		else if (check_parentheses(p, q) == true) {
