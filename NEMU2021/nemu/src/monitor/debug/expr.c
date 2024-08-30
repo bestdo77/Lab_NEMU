@@ -240,7 +240,7 @@ int eval(p, q) {
 			int t=0;
 			if(tokens[p].type==NUM){
 				t=atoi(tokens[p].str);
-			}else if(tokens[p].type==REG){
+			}else if(tokens[p].type==ADR){
 				sscanf(tokens[p].str,"%x",&t);
 			}else{
 				if(strcmp(tokens[p].str,"$eax")){
