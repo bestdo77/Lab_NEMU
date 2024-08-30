@@ -282,7 +282,7 @@ int expr(char *e, bool *success) {
 	/* TODO: Insert codes to evaluate the expression. */
 	int i;
 	for(i=0;i<nr_token;i++){
-		printf("token%d: %s",tokens[i].type,tokens[i].str);
+		printf("token%d: %s\n",tokens[i].type,tokens[i].str);
 	}
 	// printf("%d\n",(2||0));
 	return eval(0,nr_token-1);
