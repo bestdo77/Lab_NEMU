@@ -80,6 +80,15 @@ static int cmd_p(char *args){
 	// debug;
 	return 0;
 }
+static int cmd_w(char *args){
+	new_wp(args);
+	return 0;
+}
+static int cmd_d(char *args){
+	int n=atoi(args);
+	free_wp(n);
+	return 0;
+}
 static struct {
 	char *name;
 	char *description;
@@ -93,6 +102,8 @@ static struct {
 	{"info","print all reg status",cmd_info},
 	{"x","show next 'n' adress",cmd_x},
 	{"p","Analyze regular expression",cmd_p},
+	{"w","Add new watchpoints",cmd_w},
+	{"d","Delete watchpoints",cmd_d},
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))

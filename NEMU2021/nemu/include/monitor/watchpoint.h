@@ -14,4 +14,6 @@ typedef struct watchpoint {
 }WP;
 int judge_watchpoints();
 void print_watchpoints();
+void new_wp(char *args);
+void free_wp(int n);
 #endif
