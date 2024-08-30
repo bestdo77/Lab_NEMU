@@ -8,20 +8,21 @@
 
 enum {
 	/* TODO: Add more token types */
-	NUM = 0,
-	NOTYPE = 1,
-	ADD = 2,
-	SUB = 3,
-	MUL = 4,
-	DIV = 5,
-	LEFT = 6 ,
-	RIGHT = 7,
-	EQ = 8,
-	NEQ = 9,
-	AND = 10,
-	OR = 11,
-	NOT = 12,
-	XING = 13,//解引用
+	NUM,
+	ADR,
+	NOTYPE,
+	ADD,
+	SUB,
+	MUL,
+	DIV,
+	LEFT,
+	RIGHT,
+	EQ,
+	NEQ,
+	AND,
+	OR,
+	NOT,
+	XING,//解引用
 };
 
 static struct rule {
@@ -34,6 +35,7 @@ static struct rule {
 	 */
 
 	{"[0-9]+", NUM},            // 数字
+	{"^0x[0-9A-Fa-f]+$",ADR},   //地址
 	{" +", NOTYPE},           // 空白字符
 	{"\\+", ADD},             // 加号
 	{"-", SUB},               // 减号
@@ -177,11 +179,15 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 							break;
 						case MUL:
                         case DIV:
+							if(nowtype == NOT || nowtype == DIV){
+								nowtype = tokens[i].type;
+								anspos = i;
+							}
 							break;
                         case ADD:
                         case SUB:
                             // 加减运算符的优先级低于乘除
-                            if (nowtype == MUL || nowtype == DIV) {
+                            if (nowtype == MUL || nowtype == DIV || nowtype == NOT || nowtype == DIV) {
                                 nowtype = tokens[i].type;
                                 anspos = i;
                             }
@@ -189,7 +195,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
                         case EQ:
                         case NEQ:
                             // 比较运算符的优先级低于逻辑与或
-                            if (nowtype == MUL || nowtype == DIV || nowtype==ADD || nowtype==SUB ) {
+                            if (nowtype == MUL || nowtype == DIV || nowtype==ADD || nowtype==SUB || nowtype == NOT || nowtype == DIV) {
                                 nowtype = tokens[i].type;
                                 anspos = i;
                             }
@@ -224,12 +230,6 @@ int eval(p, q) {
 			*/
 			int t=atoi(tokens[p].str);
 			if(tokens[p].fu==1) t=-t;
-			// if(p!=0){
-			// 	if(tokens[p-1].type==NOT){
-			// 		t=(!t);
-			// 	}
-			// 	if(tokens[p-1].type)
-			// }
 			printf("value:%d\n",t);
 			return t;//直接转成数字
 		}
@@ -241,6 +241,9 @@ int eval(p, q) {
 		}
 		else {
 			/* We should do more things here. */
+			if(tokens[p].type==NOT){
+				return (!eval(p+1,q));
+			}
 			int op=find_domanit(p,q);
 			// printf("op:%d\n",op);
 			int val1=eval(p,op-1),val2=eval(op+1,q);
