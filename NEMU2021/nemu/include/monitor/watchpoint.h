@@ -13,4 +13,5 @@ typedef struct watchpoint {
 	bool vis;
 }WP;
 int judge_watchpoints();
+void print_watchpoints();
 #endif

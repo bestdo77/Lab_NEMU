@@ -26,7 +26,7 @@ static int cmd_info(char* s){
 		}
 		printf("$eip\t0x%08x\t%d\n", cpu.eip,cpu.eip);
 	}else if(strcmp(s,"w")){
-
+		print_watchpoints();
 	}
 	return 0;
 }
