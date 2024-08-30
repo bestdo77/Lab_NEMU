@@ -114,6 +114,12 @@ static bool make_token(char *e) {
 							// printf("FU\n");
 						}
 					}
+					if(tokens[nr_token].type==MUL){
+						if(nr_token==0||(tokens[nr_token-1].type!=NUM&&tokens[nr_token-1].type!=ADR&&tokens[nr_token-1].type!=RIGHT)){
+							tokens[nr_token].type=XING;
+							// printf("FU\n");
+						}
+					}
 					nr_token++;
 				} else {
 					printf("too much tokens\n");
