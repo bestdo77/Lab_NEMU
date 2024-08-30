@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "history.h": "c",
-        "readline.h": "c"
+        "readline.h": "c",
+        "unordered_map": "c"
     }
 }
