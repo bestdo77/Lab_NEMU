@@ -27,6 +27,8 @@ static int cmd_info(char* s){
 		printf("$eip\t0x%08x\t%d\n", cpu.eip,cpu.eip);
 	}else if(strcmp(s,"w")==0){
 		print_watchpoints();
+	}else{
+		printf("Unknown command 'info %s'\n",s);
 	}
 	return 0;
 }
