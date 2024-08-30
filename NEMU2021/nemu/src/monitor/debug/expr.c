@@ -244,6 +244,7 @@ int eval(p, q) {
 				sscanf(tokens[p].str,"%x",&t);
 			}else{
 				if(strcmp(tokens[p].str,"$eax")){
+					printf("1\n");
 					t=reg_l(R_EAX);
 				}else if(strcmp(tokens[p].str,"$ecx")){
 					t=reg_l(R_ECX);
