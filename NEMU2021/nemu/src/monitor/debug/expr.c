@@ -248,7 +248,8 @@ int eval(p, q) {
 			/* We should do more things here. */
 			if(tokens[p].type==NOT){
 				return (!eval(p+1,q));
-			}else if(tokens[p].type==FU){
+			}
+			if(tokens[p].type==FU){
 				printf("FU\n");
 				return (-eval(p+1,q));
 			}
