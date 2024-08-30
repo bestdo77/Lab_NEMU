@@ -110,7 +110,7 @@ static bool make_token(char *e) {
 					tokens[nr_token].type = rules[i].token_type;
 					if(tokens[nr_token].type==SUB){
 						if(nr_token==0||tokens[nr_token-1].type==NUM||tokens[nr_token-1].type==ADR||tokens[nr_token-1].type==RIGHT){
-							tokens[nr_token-1].type=FU;
+							tokens[nr_token].type=FU;
 						}
 					}
 					nr_token++;
