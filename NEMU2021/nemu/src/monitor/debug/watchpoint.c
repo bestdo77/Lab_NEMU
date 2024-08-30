@@ -60,7 +60,7 @@ void free_wp(int n){
 }
 
 void print_watchpoints() {
-    WP *current = head;
+    WP *current = NULL;
     while (current != NULL) {
         printf("Watchpoint ID: %d, Args: %s, Value: %d\n",current->NO, current->args, current->value);
         current = current->next;
