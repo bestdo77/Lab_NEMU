@@ -134,7 +134,7 @@ static bool make_token(char *e) {
 			return false;
 		}
 	}
-	printf("number of token:%d\n", nr_token);
+	// printf("number of token:%d\n", nr_token);
 	return true;
 }
 bool check_parentheses(uint32_t p,uint32_t q){
@@ -213,7 +213,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
                     }
 			}
 		}
-		printf("token%d: %s,anspos:%d\n",tokens[i].type,tokens[i].str,anspos);
+		// printf("token%d: %s,anspos:%d\n",tokens[i].type,tokens[i].str,anspos);
 	}
 	return anspos;
 }
@@ -279,10 +279,10 @@ int expr(char *e, bool *success) {
 		return 0;
 	}
 	/* TODO: Insert codes to evaluate the expression. */
-	int i;
-	for(i=0;i<nr_token;i++){
-		printf("token%d: %s\n",tokens[i].type,tokens[i].str);
-	}
+	// int i;
+	// for(i=0;i<nr_token;i++){
+	// 	printf("token%d: %s\n",tokens[i].type,tokens[i].str);
+	// }
 	// printf("%d\n",(2||0));
 	return eval(0,nr_token-1);
 	panic("please implement me");
