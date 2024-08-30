@@ -258,29 +258,53 @@ int eval(p, q) {
 			/* We should do more things here. */
 			int op=find_domanit(p,q);
 			printf("op:%d\n",op);
-			int val1=eval(p,op-1),val2=eval(op+1,q);
 			switch(tokens[op].type){
 				// debug;
-				case ADD: return val1+val2;
-				case SUB: return val1-val2;
-				case MUL: return val1*val2;
-				case DIV: return val1/val2;
-				case EQ: return (int)(val1==val2);
-				case NEQ: return (int)(val1!=val2);
-				case AND: return (int)(val1&&val2);
-				case OR: return (int)(val1||val2);
+				case ADD: {
+					int val1=eval(p,op-1),val2=eval(op+1,q);
+					return val1+val2;
+				}
+				case SUB: {
+					int val1=eval(p,op-1),val2=eval(op+1,q);
+					return val1-val2;
+				}
+				case MUL: {
+					int val1=eval(p,op-1),val2=eval(op+1,q);
+					return val1*val2;
+				}
+				case DIV: {
+					int val1=eval(p,op-1),val2=eval(op+1,q);
+					return val1/val2;
+				}
+				case EQ: {
+					int val1=eval(p,op-1),val2=eval(op+1,q);
+					return (int)(val1==val2);
+				}
+				case NEQ: {
+					int val1=eval(p,op-1),val2=eval(op+1,q);
+					return (int)(val1!=val2);
+				}
+				case AND: {
+					int val1=eval(p,op-1),val2=eval(op+1,q);
+					return (int)(val1&&val2);
+				}
+				case OR: {
+					int val1=eval(p,op-1),val2=eval(op+1,q);
+					return (int)(val1||val2);
+				}
+				case NOT: {
+					return (!eval(op+1,q));
+				}
+				case XING: {
+					return (swaddr_read(eval(op+1,q),4));
+				}
+				case FU:{
+					return (-eval(op+1,q));
+				}
 				default:{
 					printf("type of domanit is:%d\n",tokens[op].type);
 					assert(0);
 				}
-			}
-			if(tokens[p].type==NOT){
-				return (!eval(p+1,q));
-			}else if(tokens[p].type==FU){
-				// printf("FU\n");
-				return (-eval(p+1,q));
-			}else if(tokens[p].type==XING){
-				return (swaddr_read(eval(p+1,q),4));
 			}
 		}
 	}
