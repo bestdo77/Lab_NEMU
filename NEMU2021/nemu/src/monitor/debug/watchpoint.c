@@ -74,7 +74,7 @@ int judge_watchpoints(){
 		bool success;
         int value=expr(current->args,&success);
 		if(value!=current->value){
-			printf("1\n");
+			// printf("1\n");
 			printf("point:%d,value:%d,current:%d\n",current->NO,value,current->value);
 			return current->NO;
 		}else{
@@ -82,7 +82,7 @@ int judge_watchpoints(){
 		}
 		current=head->next;
     }
-	return 0;
+	return -1;
 }
 
 
