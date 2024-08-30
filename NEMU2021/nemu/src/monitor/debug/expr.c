@@ -274,7 +274,14 @@ int eval(p, q) {
 					assert(0);
 				}
 			}
-		
+			if(tokens[p].type==NOT){
+				return (!eval(p+1,q));
+			}else if(tokens[p].type==FU){
+				// printf("FU\n");
+				return (-eval(p+1,q));
+			}else if(tokens[p].type==XING){
+				return (swaddr_read(eval(p+1,q),4));
+			}
 		}
 	}
 int expr(char *e, bool *success) {
