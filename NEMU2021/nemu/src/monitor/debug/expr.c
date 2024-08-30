@@ -261,6 +261,8 @@ int eval(p, q) {
 					t=reg_l(R_EDI);
 				}else if(strcmp(tokens[p].str,"$eip")){
 					t=cpu.eip;
+				}else{
+					assert(0);
 				}
 			}
 			// if(tokens[p].fu==1){
