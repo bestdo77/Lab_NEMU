@@ -74,7 +74,7 @@ void cpu_exec(volatile uint32_t n) {
 
 		/* TODO: check watchpoints here. */
 		int NO=judge_watchpoints();
-		printf("%d\n",NO);
+		// printf("%d\n",NO);
 		if(NO!=-1){
 			printf("Hint watchpoint %d at address 0x%x\n",NO,cpu.eip);
 			nemu_state=STOP;
