@@ -75,6 +75,8 @@ int judge_watchpoints(){
         int value=expr(current->args,&success);
 		if(value!=current->value){
 			return current->NO;
+		}else{
+			current->value=value;
 		}
     }
 	return 0;
