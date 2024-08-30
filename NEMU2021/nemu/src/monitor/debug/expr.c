@@ -178,7 +178,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 						case NOT:
 						case XING:
 						case FU:
-							continue;
+							break;
 						case MUL:
                         case DIV:
 							if(nowtype == NOT || nowtype == DIV || nowtype == FU){
@@ -214,7 +214,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
                     }
 			}
 		}
-		// printf("token%d: %s,anspos:%d,fu:%d\n",tokens[i].type,tokens[i].str,anspos,tokens[i].fu);
+		printf("token%d: %s,anspos:%d\n",tokens[i].type,tokens[i].str,anspos);
 	}
 	return anspos;
 }
