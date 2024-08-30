@@ -284,10 +284,10 @@ int expr(char *e, bool *success) {
 		return 0;
 	}
 	/* TODO: Insert codes to evaluate the expression. */
-	// int i;
-	// for(i=0;i<nr_token;i++){
-	// 	printf("token%d: %s\n",tokens[i].type,tokens[i].str);
-	// }
+	int i;
+	for(i=0;i<nr_token;i++){
+		printf("token%d: %s\n",tokens[i].type,tokens[i].str);
+	}
 	// printf("%d\n",(2||0));
 	return eval(0,nr_token-1);
 	panic("please implement me");
