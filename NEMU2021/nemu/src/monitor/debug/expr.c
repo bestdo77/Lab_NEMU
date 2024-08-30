@@ -8,8 +8,8 @@
 
 enum {
 	/* TODO: Add more token types */
-	NUM,
 	ADR,
+	NUM,
 	NOTYPE,
 	ADD,
 	SUB,
@@ -34,9 +34,8 @@ static struct rule {
 	/* TODO: Add more rules.
 	 * Pay attention to the precedence level of different rules.
 	 */
-
-	{"[0-9]+", NUM},            // 数字
 	{"0x[0-9A-Fa-f]+",ADR},   //地址
+	{"[0-9]+", NUM},  		  // 数字
 	{" +", NOTYPE},           // 空白字符
 	{"\\+", ADD},             // 加号
 	{"-", SUB},               // 减号
