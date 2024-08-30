@@ -13,6 +13,7 @@ enum {
 	NOTYPE,
 	ADD,
 	SUB,
+	FU,
 	MUL,
 	DIV,
 	LEFT,
@@ -35,10 +36,11 @@ static struct rule {
 	 */
 
 	{"[0-9]+", NUM},            // 数字
-	{"^0x[0-9A-Fa-f]+$",ADR},   //地址
+	{"0x[0-9A-Fa-f]+",ADR},   //地址
 	{" +", NOTYPE},           // 空白字符
 	{"\\+", ADD},             // 加号
 	{"-", SUB},               // 减号
+	{"-",FU},				  // 负号在减号之后
 	{"\\*", MUL},             // 乘号
 	{"/", DIV},               // 除号
 	{"\\(", LEFT},            // 左括号
@@ -73,7 +75,7 @@ void init_regex() {
 }
 
 typedef struct token {
-	int fu;
+	// int fu;
 	int type;
 	char str[32];
 } Token;
@@ -89,7 +91,7 @@ static bool make_token(char *e) {
 	nr_token = 0; // 已有的token数量
 	bool fu=0;
 	while (e[position] != '\0') {
-		tokens[nr_token].fu=0;
+		// tokens[nr_token].fu=0;
 		for (i = 0; i < NR_REGEX; i++) {
 			if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
 				char *substr_start = e + position; // 匹配成功子串的起始地址
@@ -106,16 +108,8 @@ static bool make_token(char *e) {
 					if (substr_len < 32) {
 						strncpy(tokens[nr_token].str, substr_start, substr_len);
 						tokens[nr_token].str[substr_len] = '\0'; // 确保字符串以空字符结束
-					} else {
-						// 如果字符串长度等于最大长度，手动添加终止符
-						strncpy(tokens[nr_token].str, substr_start, 31);
-						tokens[nr_token].str[31] = '\0';
 					}
 					tokens[nr_token].type = rules[i].token_type;
-					if(tokens[nr_token].type==NUM&&fu==1){
-						tokens[nr_token].fu=1;
-						fu=0;
-					}
 					nr_token++;
 				} else {
 					printf("too much tokens\n");
@@ -213,7 +207,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
                     }
 			}
 		}
-		printf("token%d: %s,anspos:%d,fu:%d\n",tokens[i].type,tokens[i].str,anspos,tokens[i].fu);
+		// printf("token%d: %s,anspos:%d,fu:%d\n",tokens[i].type,tokens[i].str,anspos,tokens[i].fu);
 	}
 	return anspos;
 }
@@ -230,10 +224,10 @@ int eval(p, q) {
 			* Return the value of the number.
 			*/
 			int t=atoi(tokens[p].str);
-			if(tokens[p].fu==1){
-				t=-t;
-				tokens[p].fu=0;
-			} 
+			// if(tokens[p].fu==1){
+			// 	t=-t;
+			// 	tokens[p].fu=0;
+			// } 
 			printf("value:%d\n",t);
 			return t;//直接转成数字
 		}
