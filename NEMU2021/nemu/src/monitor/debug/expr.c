@@ -89,6 +89,7 @@ static bool make_token(char *e) {
 	nr_token = 0; // 已有的token数量
 	bool fu=0;
 	while (e[position] != '\0') {
+		tokens[nr_token].fu=0;
 		for (i = 0; i < NR_REGEX; i++) {
 			if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
 				char *substr_start = e + position; // 匹配成功子串的起始地址
@@ -229,7 +230,10 @@ int eval(p, q) {
 			* Return the value of the number.
 			*/
 			int t=atoi(tokens[p].str);
-			if(tokens[p].fu==1) t=-t;
+			if(tokens[p].fu==1){
+				t=-t;
+				tokens[p].fu=0;
+			} 
 			printf("value:%d\n",t);
 			return t;//直接转成数字
 		}
