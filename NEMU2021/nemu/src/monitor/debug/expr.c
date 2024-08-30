@@ -299,6 +299,7 @@ int eval(p, q) {
 					return (swaddr_read(eval(op+1,q),4));
 				}
 				case FU:{
+					printf("FU\n");
 					return (-eval(op+1,q));
 				}
 				default:{
