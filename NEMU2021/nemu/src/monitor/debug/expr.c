@@ -150,7 +150,7 @@ bool check_parentheses(uint32_t p,uint32_t q){
                 continue;
             }else r--;
         }else if(tokens[l].type == LEFT) return false;
-        else l ++;
+        else l++;
     }
     return true;
 }//看看p，q中间是否都是配对好的括号
@@ -249,7 +249,8 @@ int eval(p, q) {
 			if(tokens[p].type==NOT){
 				return (!eval(p+1,q));
 			}else if(tokens[p].type==FU){
-				return -eval(p+1,q);
+				printf("FU\n");
+				return (-eval(p+1,q));
 			}
 			int op=find_domanit(p,q);
 			// printf("op:%d\n",op);
