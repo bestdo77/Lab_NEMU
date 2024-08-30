@@ -243,24 +243,24 @@ int eval(p, q) {
 			}else if(tokens[p].type==ADR){
 				sscanf(tokens[p].str,"%x",&t);
 			}else{
-				if(strcmp(tokens[p].str,"$eax")){
+				if(!strcmp(tokens[p].str,"$eax")){
 					// printf("1\n");
 					t=reg_l(R_EAX);
-				}else if(strcmp(tokens[p].str,"$ecx")){
+				}else if(!strcmp(tokens[p].str,"$ecx")){
 					t=reg_l(R_ECX);
-				}else if(strcmp(tokens[p].str,"$edx")){
+				}else if(!strcmp(tokens[p].str,"$edx")){
 					t=reg_l(R_EDX);
-				}else if(strcmp(tokens[p].str,"$ebx")){
+				}else if(!strcmp(tokens[p].str,"$ebx")){
 					t=reg_l(R_EBX);
-				}else if(strcmp(tokens[p].str,"$esp")){
+				}else if(!strcmp(tokens[p].str,"$esp")){
 					t=reg_l(R_ESP);
-				}else if(strcmp(tokens[p].str,"$ebp")){
+				}else if(!strcmp(tokens[p].str,"$ebp")){
 					t=reg_l(R_EBP);
-				}else if(strcmp(tokens[p].str,"$esi")){
+				}else if(!strcmp(tokens[p].str,"$esi")){
 					t=reg_l(R_ESI);
-				}else if(strcmp(tokens[p].str,"$edi")){
+				}else if(!strcmp(tokens[p].str,"$edi")){
 					t=reg_l(R_EDI);
-				}else if(strcmp(tokens[p].str,"$eip")){
+				}else if(!strcmp(tokens[p].str,"$eip")){
 					t=cpu.eip;
 				}else{
 					assert(0);
