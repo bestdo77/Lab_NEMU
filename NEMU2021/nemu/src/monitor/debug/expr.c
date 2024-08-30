@@ -9,6 +9,7 @@
 enum {
 	/* TODO: Add more token types */
 	ADR,
+	REG,
 	NUM,
 	NOTYPE,
 	ADD,
@@ -35,6 +36,7 @@ static struct rule {
 	 * Pay attention to the precedence level of different rules.
 	 */
 	{"0x[0-9A-Fa-f]+",ADR},   //地址
+	{"\\$[a-z]{3}",REG},		  //寄存器
 	{"[0-9]+", NUM},  		  // 数字
 	{" +", NOTYPE},           // 空白字符
 	{"\\+", ADD},             // 加号
@@ -235,11 +237,31 @@ int eval(p, q) {
 			* For now this token should be a number.
 			* Return the value of the number.
 			*/
-			int t;
+			int t=0;
 			if(tokens[p].type==NUM){
 				t=atoi(tokens[p].str);
-			}else{
+			}else if(tokens[p].type==REG){
 				sscanf(tokens[p].str,"%x",&t);
+			}else{
+				if(strcmp(tokens[p].str,"$eax")){
+					t=reg_l(R_EAX);
+				}else if(strcmp(tokens[p].str,"$ecx")){
+					t=reg_l(R_ECX);
+				}else if(strcmp(tokens[p].str,"$edx")){
+					t=reg_l(R_EDX);
+				}else if(strcmp(tokens[p].str,"$ebx")){
+					t=reg_l(R_EBX);
+				}else if(strcmp(tokens[p].str,"$esp")){
+					t=reg_l(R_ESP);
+				}else if(strcmp(tokens[p].str,"$ebp")){
+					t=reg_l(R_EBP);
+				}else if(strcmp(tokens[p].str,"$esi")){
+					t=reg_l(R_ESI);
+				}else if(strcmp(tokens[p].str,"$edi")){
+					t=reg_l(R_EDI);
+				}else if(strcmp(tokens[p].str,"$eip")){
+					t=cpu.eip;
+				}
 			}
 			// if(tokens[p].fu==1){
 			// 	t=-t;
