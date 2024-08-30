@@ -178,7 +178,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 						case NOT:
 						case XING:
 						case FU:
-							break;
+							continue;
 						case MUL:
                         case DIV:
 							if(nowtype == NOT || nowtype == DIV || nowtype == FU){
