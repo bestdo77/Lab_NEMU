@@ -149,7 +149,7 @@ bool check_parentheses(uint32_t p,uint32_t q){
         return false;
     int l;
 	int num=0;
-	for(l=p;l<=q;l++){
+	for(l=p+1;l<=q-1;l++){
 		if(tokens[l].type==LEFT){
 			num++;
 		}else if(tokens[l].type==RIGHT){
