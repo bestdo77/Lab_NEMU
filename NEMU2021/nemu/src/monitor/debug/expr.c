@@ -145,7 +145,6 @@ static bool make_token(char *e) {
 	return true;
 }
 bool check_parentheses(uint32_t p,uint32_t q){
-	printf("p:%d,q:%d\n",p,q);
 	if(tokens[p].type != LEFT  || tokens[q].type != RIGHT)
         return false;
     int l;
@@ -158,6 +157,7 @@ bool check_parentheses(uint32_t p,uint32_t q){
 			if(num<0) return false;
 		} 
 	}
+	printf("p:%d,q:%d,ans:%d\n",p,q,(int)(num==0));
 	return num==0;
 }//看看p，q中间是否都是配对好的括号
 
