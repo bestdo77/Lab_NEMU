@@ -147,19 +147,20 @@ static bool make_token(char *e) {
 bool check_parentheses(uint32_t p,uint32_t q){
 	if(tokens[p].type != LEFT  || tokens[q].type != RIGHT)
         return false;
-    int l = p , r = q;
-    while(l < r)
-    {
-        if(tokens[l].type == LEFT){
-            if(tokens[r].type == RIGHT){
-                l++ , r--;
-                continue;
-            }else r--;
-        }else if(tokens[l].type == LEFT) return false;
-        else l++;
-    }
-    return true;
+    int l;
+	int num=0;
+	for(l=p+1;l<=q-1;l++){
+		if(tokens[l].type==LEFT){
+			num++;
+		}else if(tokens[l].type==RIGHT){
+			num--;
+			if(num<0) return false;
+		} 
+	}
+	// printf("p:%d,q:%d,ans:%d\n",p,q,(int)(num==0));
+	return num==0;
 }//看看p，q中间是否都是配对好的括号
+
 uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	uint32_t anspos=0;
 	int nowtype=NOTYPE,l=0,r=0;//左右括号的数量
