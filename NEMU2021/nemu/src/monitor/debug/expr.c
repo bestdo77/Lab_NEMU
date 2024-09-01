@@ -155,7 +155,7 @@ bool check_parentheses(uint32_t p,uint32_t q){
                 l++ , r--;
                 continue;
             }else r--;
-        }else if(tokens[l].type == LEFT) return false;
+        }else if(tokens[r].type == LEFT) return false;
         else l++;
     }
     return true;
