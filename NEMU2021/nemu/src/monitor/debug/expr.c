@@ -145,6 +145,7 @@ static bool make_token(char *e) {
 	return true;
 }
 bool check_parentheses(uint32_t p,uint32_t q){
+	printf("p:%d,q:%d\n",p,q);
 	if(tokens[p].type != LEFT  || tokens[q].type != RIGHT)
         return false;
     int l;
