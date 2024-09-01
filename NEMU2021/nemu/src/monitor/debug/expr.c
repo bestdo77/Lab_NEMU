@@ -147,18 +147,17 @@ static bool make_token(char *e) {
 bool check_parentheses(uint32_t p,uint32_t q){
 	if(tokens[p].type != LEFT  || tokens[q].type != RIGHT)
         return false;
-    int l = p , r = q;
-    while(l < r)
-    {
-        if(tokens[l].type == LEFT){
-            if(tokens[r].type == RIGHT){
-                l++ , r--;
-                continue;
-            }else r--;
-        }else if(tokens[r].type == LEFT) return false;
-        else l++;
-    }
-    return true;
+    int l;
+	int num=0;
+	for(l=p;l<=q;l++){
+		if(tokens[l].type==LEFT){
+			num++;
+		}else if(tokens[l].type==RIGHT){
+			num--;
+			if(num<0) return false;
+		} 
+	}
+	return num==0;
 }//看看p，q中间是否都是配对好的括号
 
 uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
