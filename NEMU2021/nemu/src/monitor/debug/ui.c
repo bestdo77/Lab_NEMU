@@ -24,7 +24,7 @@ static int cmd_info(char* s){
 		for(i=R_EAX;i<=R_EDI;i++){
 			printf("%s\t0x%.8x\n",regsl[i],reg_l(i));
 		}
-		printf("$eip\t0x%08x\n", cpu.eip);
+		printf("eip\t0x%08x\n", cpu.eip);
 	}else if(strcmp(s,"w")==0){
 		print_watchpoints();
 	}else{
