@@ -39,8 +39,9 @@ static int cmd_x(char* s){
 	for(p=0;p<n;p++){
 		printf("0x%.8x ",swaddr_read(x1,4));
 		x1+=4;
-		printf("\n");
+		printf(" ");
 	}
+	printf("\n");
 	return 0;
 }
 /* We use the `readline' library to provide more flexibility to read from stdin. */
