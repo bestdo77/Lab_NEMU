@@ -16,7 +16,6 @@ void init_wp_pool() {
 	head = NULL;
 	free_ = wp_pool;
 }
-uint32_t nr_wp=0;
 /* TODO: Implement the functionality of watchpoint */
 void new_wp(char* args) {
     if (free_ == NULL) {

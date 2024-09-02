@@ -144,7 +144,7 @@ static bool make_token(char *e) {
 	// printf("number of token:%d\n", nr_token);
 	return true;
 }
-bool check_parentheses(uint32_t p,uint32_t q){
+static bool check_parentheses(uint32_t p,uint32_t q){
 	if(tokens[p].type != LEFT  || tokens[q].type != RIGHT)
         return false;
     int l;
@@ -161,7 +161,7 @@ bool check_parentheses(uint32_t p,uint32_t q){
 	return num==0;
 }//看看p，q中间是否都是配对好的括号
 
-uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
+static uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	uint32_t anspos=0;
 	int nowtype=NOTYPE,l=0,r=0;//左右括号的数量
 	uint32_t i;
@@ -225,7 +225,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	}
 	return anspos;
 }
-int eval(p, q) {
+static int eval(p, q) {
 		// printf("p:%d,q:%d\n",p,q);
 		if (p > q) {
 			/* Bad expression */
