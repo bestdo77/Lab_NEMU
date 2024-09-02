@@ -188,7 +188,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 							break;
 						case MUL:
                         case DIV:
-							if(nowtype == NOT || nowtype == DIV || nowtype == FU){
+							if(nowtype == NOT || nowtype == XING || nowtype == FU){
 								nowtype = tokens[i].type;
 								anspos = i;
 							}
@@ -196,7 +196,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
                         case ADD:
                         case SUB:
                             // 加减运算符的优先级低于乘除
-                            if (nowtype == MUL || nowtype == DIV || nowtype == NOT || nowtype == DIV || nowtype == FU) {
+                            if (nowtype == MUL || nowtype == DIV || nowtype == NOT || nowtype == XING || nowtype == FU) {
                                 nowtype = tokens[i].type;
                                 anspos = i;
                             }
@@ -204,7 +204,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
                         case EQ:
                         case NEQ:
                             // 比较运算符的优先级低于逻辑与或
-                            if (nowtype == MUL || nowtype == DIV || nowtype==ADD || nowtype==SUB || nowtype == NOT || nowtype == DIV || nowtype ==FU){
+                            if (nowtype == MUL || nowtype == DIV || nowtype==ADD || nowtype==SUB || nowtype == NOT || nowtype == XING || nowtype == FU){
                                 nowtype = tokens[i].type;
                                 anspos = i;
                             }
