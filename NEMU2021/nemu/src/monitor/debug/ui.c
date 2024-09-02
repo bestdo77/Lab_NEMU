@@ -37,11 +37,9 @@ static int cmd_x(char* s){
 	sscanf(s,"%d %x",&n,&x1);
 	int p;
 	for(p=0;p<n;p++){
-		if(p%4==0) printf("0x%.8x: ",x1);
 		printf("0x%.8x ",swaddr_read(x1,4));
 		x1+=4;
-		if(p%4==3) printf("\n");
-		else if(p==n-1) printf("\n");
+		printf("\n");
 	}
 	return 0;
 }
