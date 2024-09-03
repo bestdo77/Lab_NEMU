@@ -3,7 +3,7 @@
 
 #include "all-instr.h"
 
-typedef int (*helper_fun)(swaddr_t);
+typedef int (*helper_fun)(swaddr_t);//函数指针
 static make_helper(_2byte_esc);
 
 #define make_group(name, item0, item1, item2, item3, item4, item5, item6, item7) \
@@ -93,7 +93,7 @@ make_group(group7,
 
 /* TODO: Add more instructions!!! */
 
-helper_fun opcode_table [256] = {
+helper_fun opcode_table [256] = {//每个元素都是一个函数指针，可以直接调用，typedef int (*helper_fun)(swaddr_t)，查表法
 /* 0x00 */	inv, inv, inv, inv,
 /* 0x04 */	inv, inv, inv, inv,
 /* 0x08 */	inv, or_r2rm_v, or_rm2r_b, inv,
@@ -227,9 +227,9 @@ helper_fun _2byte_opcode_table [256] = {
 /* 0xfc */	inv, inv, inv, inv
 };
 
-make_helper(exec) {
-	ops_decoded.opcode = instr_fetch(eip, 1);
-	return opcode_table[ ops_decoded.opcode ](eip);
+make_helper(exec) {//通过makehelper完成exec函数定义，exec是个int exec(swaddr_t)类型
+	ops_decoded.opcode = instr_fetch(eip, 1);//读出来一个字节的opcode
+	return opcode_table[ ops_decoded.opcode ](eip);//opcode_table 是个函数指针，所以要用eip传入参数
 }
 
 static make_helper(_2byte_esc) {
