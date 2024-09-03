@@ -2,7 +2,7 @@
 #include "monitor/expr.h"
 #include "monitor/watchpoint.h"
 #include "nemu.h"
-// #include "expr.c"
+// #include "expr.h"
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -22,9 +22,9 @@ static int cmd_info(char* s){
 	if(strcmp(s,"r")==0){
 		int i;
 		for(i=R_EAX;i<=R_EDI;i++){
-			printf("%s\t0x%.8x\t%d\n",regsl[i],reg_l(i),reg_l(i));
+			printf("$%s\t(0x%.8x)\n",regsl[i],reg_l(i));
 		}
-		printf("$eip\t0x%08x\t%d\n", cpu.eip,cpu.eip);
+		printf("$eip\t(0x%08x)\n", cpu.eip);
 	}else if(strcmp(s,"w")==0){
 		print_watchpoints();
 	}else{
@@ -37,12 +37,11 @@ static int cmd_x(char* s){
 	sscanf(s,"%d %x",&n,&x1);
 	int p;
 	for(p=0;p<n;p++){
-		if(p%4==0) printf("0x%.8x: ",x1);
 		printf("0x%.8x ",swaddr_read(x1,4));
 		x1+=4;
-		if(p%4==3) printf("\n");
-		else if(p==n-1) printf("\n");
+		printf(" ");
 	}
+	printf("\n");
 	return 0;
 }
 /* We use the `readline' library to provide more flexibility to read from stdin. */

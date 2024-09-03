@@ -5,6 +5,7 @@
  */
 #include <sys/types.h>
 #include <regex.h>
+#include <stdlib.h>
 
 enum {
 	/* TODO: Add more token types */
@@ -144,7 +145,7 @@ static bool make_token(char *e) {
 	// printf("number of token:%d\n", nr_token);
 	return true;
 }
-bool check_parentheses(uint32_t p,uint32_t q){
+static bool check_parentheses(uint32_t p,uint32_t q){
 	if(tokens[p].type != LEFT  || tokens[q].type != RIGHT)
         return false;
     int l;
@@ -160,7 +161,6 @@ bool check_parentheses(uint32_t p,uint32_t q){
 	// printf("p:%d,q:%d,ans:%d\n",p,q,(int)(num==0));
 	return num==0;
 }//看看p，q中间是否都是配对好的括号
-
 uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	uint32_t anspos=0;
 	int nowtype=NOTYPE,l=0,r=0;//左右括号的数量
@@ -188,7 +188,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 							break;
 						case MUL:
                         case DIV:
-							if(nowtype == NOT || nowtype == DIV || nowtype == FU){
+							if(nowtype == NOT || nowtype == XING || nowtype == FU){
 								nowtype = tokens[i].type;
 								anspos = i;
 							}
@@ -196,7 +196,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
                         case ADD:
                         case SUB:
                             // 加减运算符的优先级低于乘除
-                            if (nowtype == MUL || nowtype == DIV || nowtype == NOT || nowtype == DIV || nowtype == FU) {
+                            if (nowtype == MUL || nowtype == DIV || nowtype == NOT || nowtype == XING || nowtype == FU) {
                                 nowtype = tokens[i].type;
                                 anspos = i;
                             }
@@ -204,7 +204,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
                         case EQ:
                         case NEQ:
                             // 比较运算符的优先级低于逻辑与或
-                            if (nowtype == MUL || nowtype == DIV || nowtype==ADD || nowtype==SUB || nowtype == NOT || nowtype == DIV || nowtype ==FU){
+                            if (nowtype == MUL || nowtype == DIV || nowtype==ADD || nowtype==SUB || nowtype == NOT || nowtype == XING || nowtype == FU){
                                 nowtype = tokens[i].type;
                                 anspos = i;
                             }
@@ -225,7 +225,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	}
 	return anspos;
 }
-int eval(p, q) {
+static int eval(p, q) {
 		// printf("p:%d,q:%d\n",p,q);
 		if (p > q) {
 			/* Bad expression */

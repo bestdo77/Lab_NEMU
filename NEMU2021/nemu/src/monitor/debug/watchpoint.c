@@ -3,7 +3,7 @@
 #define NR_WP 32
 
 static WP wp_pool[NR_WP]={};
-static WP *head, *free_;
+static WP *head, *free_; 
 
 void init_wp_pool() {
 	int i;
@@ -16,7 +16,6 @@ void init_wp_pool() {
 	head = NULL;
 	free_ = wp_pool;
 }
-uint32_t nr_wp=0;
 /* TODO: Implement the functionality of watchpoint */
 void new_wp(char* args) {
     if (free_ == NULL) {
@@ -38,7 +37,7 @@ void new_wp(char* args) {
     // 将新的 watchpoint 添加到链表头部
     wp->next = head;
     head = wp;
-	printf("watchpoint %d added\n",wp->NO);
+	// printf("watchpoint %d added\n",wp->NO);
 }
 void free_wp(int n){
 	WP *wp=&wp_pool[n];
@@ -56,7 +55,7 @@ void free_wp(int n){
 	}
 	wp->next = free_;
     free_ = wp;
-	printf("watchpoint %d deleted\n",n);
+	// printf("watchpoint %d deleted\n",n);
 }
 
 void print_watchpoints() {
@@ -65,7 +64,7 @@ void print_watchpoints() {
         printf("Watchpoint ID: %d, Args: %s, Value: %d\n",current->NO, current->args, current->value);
         current = current->next;
     }
-	printf("all watchpoint showed\n");
+	// printf("all watchpoint showed\n");
 }
 
 int judge_watchpoints(){
