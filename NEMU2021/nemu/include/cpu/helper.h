@@ -23,7 +23,7 @@ static inline int idex(swaddr_t eip, int (*decode)(swaddr_t), void (*execute) (v
 /* shared by all helper function */
 extern Operands ops_decoded;//声明外部变量，所有引用该头文件的都可以使用该变量
 
-#define op_src (&ops_decoded.src)//存放操作码操作数
+#define op_src (&ops_decoded.src)//存
 #define op_src2 (&ops_decoded.src2)
 #define op_dest (&ops_decoded.dest)
 
