@@ -49,6 +49,7 @@ typedef struct {
 			uint16_t pad4;
 		};
 		uint32_t val;
+		
 	} eflags;
 
 } CPU_state;
