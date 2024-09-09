@@ -53,8 +53,8 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
-USERPROG := obj/testcase/integral
-ENTRY := $(USERPROG)
+USERPROG := obj/testcase/print-FLOAT
+ENTRY := $(kernel_BIN)
 
 entry: $(ENTRY)
 	objcopy -S -O binary $(ENTRY) entry
@@ -73,3 +73,6 @@ test: $(nemu_BIN) $(testcase_BIN) entry
 
 submit: clean
 	cd .. && zip -r $(STU_ID).zip $(shell pwd | grep -o '[^/]*$$')
+
+count:
+	cd nemu && echo "the code lines are " && find -name *.h -or -name *.c | xargs cat | grep -v ^$$ | wc -l
