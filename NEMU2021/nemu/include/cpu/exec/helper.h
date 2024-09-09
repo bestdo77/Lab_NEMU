@@ -8,13 +8,14 @@
 	make_helper(concat(name, _v)) { \
 		return (ops_decoded.is_operand_size_16 ? concat(name, _w) : concat(name, _l)) (eip); \
 	}
-//\是转义字符，实际上是一行，方便宏定义,判断是不是16位的，是16就调用w，不是就是l
+
 #define do_execute concat4(do_, instr, _, SUFFIX)
 
 #define make_instr_helper(type) \
 	make_helper(concat5(instr, _, type, _, SUFFIX)) { \
 		return idex(eip, concat4(decode_, type, _, SUFFIX), do_execute); \
 	}
+
 extern char assembly[];
 #ifdef DEBUG
 #define print_asm(...) Assert(snprintf(assembly, 80, __VA_ARGS__) < 80, "buffer overflow!")
