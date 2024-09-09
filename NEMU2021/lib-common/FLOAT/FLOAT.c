@@ -58,26 +58,26 @@ FLOAT f2F(float a) {
 	 * performing arithmetic operations on it directly?
 	 */
 
-	int A = *(int*) &a;
-	int sign = A & 0x80000000;
-	int exp = (A >> 23) & 0xff;
-	int frac = A & 0x7fffff;
-
-	if(exp == 255){
-		if(sign)return -0x7fffffff;
+	int b = *(int *)&a;
+	int sign = b & 0x80000000;
+	int exp = (b >> 23) & 0xff;
+	int last = b & 0x7fffff;	
+	
+	if(exp == 255) {
+		if (sign) return -0x7fffffff;
 		else return 0x7fffffff;
 	}
+	
+	if(exp == 0) return 0;
 
-	if(exp == 0)return 0;
+	last |= 1 << 23;
+	exp -= 134;	
+	if (exp < 0) last >>= -exp;
+	if (exp > 0) last <<= exp;
 
-	frac = frac | (1 << 23);
-	exp = exp - 127 - 23 + 16;
-	if(exp > 0)frac <<= exp;
-	else if (exp < 0)frac >>= -exp;
-
-	if(sign)return -frac;
-	else return frac;
+	if (sign) return -last;else return last;
 }
+
 
 FLOAT Fabs(FLOAT a) {
 	if(a < 0)return -a;
