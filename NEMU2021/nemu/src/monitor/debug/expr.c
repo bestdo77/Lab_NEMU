@@ -7,7 +7,7 @@
 #include <sys/types.h>
 #include <regex.h>
 #include <stdlib.h>
-int var_read(char *name);
+uint32_t getVariable(char* name, bool* success);
 enum {
 	/* TODO: Add more token types */
 	ADR,
@@ -247,7 +247,8 @@ static int eval(int p, int q) {
 			}else if(tokens[p].type==ADR){
 				sscanf(tokens[p].str,"%x",&t);
 			}else if(tokens[p].type==BDS){
-				t=var_read(tokens[p].str);
+				bool success;
+				t=getVariable(tokens[p].str, &success);
 			}else{
 				if(!strcmp(tokens[p].str,"$eax")){
 					// printf("1\n");
