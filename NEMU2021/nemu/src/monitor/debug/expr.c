@@ -1,4 +1,5 @@
 #include "nemu.h"
+//#include "elf.h"
 
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
@@ -6,7 +7,7 @@
 #include <sys/types.h>
 #include <regex.h>
 #include <stdlib.h>
-
+int var_read(char *name);
 enum {
 	/* TODO: Add more token types */
 	ADR,
@@ -26,6 +27,7 @@ enum {
 	OR,
 	NOT,
 	XING,//解引用
+	BDS,
 };
 
 static struct rule {
@@ -53,6 +55,7 @@ static struct rule {
 	{"&&", AND},              // 逻辑与
 	{"\\|\\|", OR},           // 逻辑或
 	{"!", NOT},               // 逻辑非
+	{"[_A-Za-z][_A-Za-z0-9]*"},
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -169,7 +172,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	// printf("p:%d q:%d\n",p,q);
 	for(i=q;i>=p+1;i--){
 		// debug
-		if(tokens[i].type!=NUM&&tokens[i].type!=NOTYPE&&tokens[i].type!=ADR&&tokens[i].type!=REG){
+		if(tokens[i].type!=NUM&&tokens[i].type!=NOTYPE&&tokens[i].type!=ADR&&tokens[i].type!=REG&&tokens[i].type!=BDS){
 			if(tokens[i].type==LEFT){
 				l++;continue;
 			}
@@ -243,6 +246,8 @@ static int eval(int p, int q) {
 				t=atoi(tokens[p].str);
 			}else if(tokens[p].type==ADR){
 				sscanf(tokens[p].str,"%x",&t);
+			}else if(tokens[p].type==BDS){
+				t=var_read(tokens[p].str);
 			}else{
 				if(!strcmp(tokens[p].str,"$eax")){
 					// printf("1\n");

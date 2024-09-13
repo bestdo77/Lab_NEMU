@@ -81,3 +81,12 @@ void load_elf_tables(int argc, char *argv[]) {
 	fclose(fp);
 }
 
+int var_read(char *name){
+	int i;
+			for (i = 0; i < nr_symtab_entry; i++) {
+				if (((symtab[i].st_info & 0xf) == STT_OBJECT) || ((symtab[i].st_info & 0xf) == STT_FUNC)){
+					if(strcmp(strtab + symtab[i].st_name, name) == 0) return symtab[i].st_value;
+				}
+			}
+	return 0;
+} 
