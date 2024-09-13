@@ -55,7 +55,7 @@ static struct rule {
 	{"&&", AND},              // 逻辑与
 	{"\\|\\|", OR},           // 逻辑或
 	{"!", NOT},               // 逻辑非
-	{"[_A-Za-z][_A-Za-z0-9]*"},
+	{"[_A-Za-z][_A-Za-z0-9]*",BDS},
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
