@@ -225,7 +225,7 @@ uint32_t find_domanit(uint32_t p,uint32_t q){//找主运算符
 	}
 	return anspos;
 }
-static int eval(p, q) {
+static int eval(int p, int q) {
 		// printf("p:%d,q:%d\n",p,q);
 		if (p > q) {
 			/* Bad expression */
